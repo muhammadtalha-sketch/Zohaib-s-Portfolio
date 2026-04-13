@@ -11,6 +11,9 @@
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
 
     <style>
         /* ==================== ROOT VARIABLES ==================== */
@@ -442,7 +445,7 @@
 
         .hero-scroll {
             position: absolute;
-            bottom: 36px;
+            bottom: 92px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 2;
@@ -1123,6 +1126,12 @@
             font-weight: 500;
         }
 
+        .contact-email strong {
+            color: var(--text);
+            opacity: 1;
+            text-transform: lowercase;
+        }
+
         /* ==================== FOOTER ==================== */
         footer {
             background: var(--black);
@@ -1196,25 +1205,143 @@
             display: flex;
             gap: 14px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .social-btn {
             width: 38px;
             height: 38px;
-            border: 1px solid var(--border);
+            border: 1px solid rgba(212, 168, 67, 0.28);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-muted);
+            color: var(--gold-light);
+            background: rgba(212, 168, 67, 0.1);
             font-size: 0.85rem;
             transition: var(--transition);
+            opacity: 1;
+            transform: none;
+        }
+
+        .social-btn i {
+            color: inherit;
+            font-size: 0.95rem;
+            line-height: 1;
+            opacity: 1;
         }
 
         .social-btn:hover {
             border-color: var(--gold);
             color: var(--gold);
-            background: var(--gold-dim);
+            background: rgba(212, 168, 67, 0.18);
+        }
+
+        /* ==================== LOADER ==================== */
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .loader-letter {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 7rem;
+            letter-spacing: 0.05em;
+            color: var(--gold-light);
+            background: rgba(212, 168, 67, 0.1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        /* ==================== SKILL BARS ==================== */
+        .skill-bars {
+            margin-top: 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .skill-row {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .skill-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .skill-meta .skill-pct {
+            color: var(--gold);
+        }
+
+        .skill-track {
+            width: 100%;
+            height: 5px;
+            background: var(--surface3);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .skill-fill {
+            height: 100%;
+            width: 0;
+            border-radius: 6px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+        }
+
+        /* ==================== HERO CAROUSEL ==================== */
+        .hero-carousel-wrap {
+            position: absolute;
+            left: 5vw;
+            right: 5vw;
+            bottom: 20px;
+            height: 60px;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(13, 15, 20, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 2;
+        }
+
+        .hero-carousel-track {
+            display: flex;
+            gap: 0;
+            will-change: transform;
+            height: 100%;
+        }
+
+        .hero-carousel-slide {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 0 26px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.18rem;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+            color: var(--gold);
+            gap: 10px;
+        }
+
+        .hero-carousel-slide:nth-child(even) {
+            color: var(--gold-light);
         }
 
         /* ==================== ANIMATIONS ==================== */
@@ -1354,6 +1481,22 @@
                 font-size: clamp(3.5rem, 14vw, 6rem);
             }
 
+            .hero-carousel-wrap {
+                left: 4vw;
+                right: 4vw;
+                bottom: 16px;
+                height: 54px;
+            }
+
+            .hero-carousel-slide {
+                font-size: 0.98rem;
+                padding: 0 18px;
+            }
+
+            .hero-scroll {
+                bottom: 86px;
+            }
+
             .portfolio-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -1376,6 +1519,22 @@
             .hero-actions .btn {
                 width: 100%;
                 justify-content: center;
+            }
+
+            .hero-carousel-wrap {
+                height: 50px;
+                bottom: 14px;
+            }
+
+            .hero-carousel-slide {
+                font-size: 0.85rem;
+                letter-spacing: 0.08em;
+                padding: 0 14px;
+                gap: 8px;
+            }
+
+            .hero-scroll {
+                bottom: 80px;
             }
         }
 
@@ -1448,6 +1607,11 @@
 </head>
 
 <body>
+
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-letter" id="loaderLetter">Z</div>
+    </div>
 
     <!-- Custom cursor -->
     <div class="cursor" id="cursor"></div>
@@ -1528,6 +1692,26 @@
             </div>
         </div>
 
+        <!-- Hero Carousel Strip -->
+        <div class="hero-carousel-wrap">
+            <div id="heroCarousel" class="hero-carousel-track">
+                <div class="hero-carousel-slide"><i class="fas fa-layer-group"></i> All Work</div>
+                <div class="hero-carousel-slide"><i class="fas fa-pen-nib"></i> Logo Design</div>
+                <div class="hero-carousel-slide"><i class="fas fa-briefcase"></i> Branding</div>
+                <div class="hero-carousel-slide"><i class="fas fa-mobile-screen"></i> Social Media</div>
+                <div class="hero-carousel-slide"><i class="fas fa-print"></i> Print Media</div>
+                <div class="hero-carousel-slide"><i class="fas fa-id-card"></i> Business Cards</div>
+
+                <div class="hero-carousel-slide"><i class="fas fa-layer-group"></i> All Work</div>
+                <div class="hero-carousel-slide"><i class="fas fa-pen-nib"></i> Logo Design</div>
+                <div class="hero-carousel-slide"><i class="fas fa-briefcase"></i> Branding</div>
+                <div class="hero-carousel-slide"><i class="fas fa-mobile-screen"></i> Social Media</div>
+                <div class="hero-carousel-slide"><i class="fas fa-print"></i> Print Media</div>
+                <div class="hero-carousel-slide"><i class="fas fa-id-card"></i> Business Cards</div>
+                <div class="hero-carousel-slide"><i class="fas fa-wand-magic-sparkles"></i> Motion Design</div>
+            </div>
+        </div>
+
         <div class="hero-scroll">
             <span>Scroll</span>
             <div class="scroll-line"></div>
@@ -1555,11 +1739,7 @@
             <div class="about-content">
                 <span class="label">About Me</span>
                 <h2 class="section-title">I'm Zohaib,<br><em>Design Craftsman</em></h2>
-                <p>
-                    I'm a passionate graphic designer dedicated to creating visual identities that speak louder than
-                    words. With a keen eye for aesthetics and a deep understanding of brand strategy, I help businesses
-                    stand out in a crowded marketplace.
-                </p>
+                <p id="typingText" style="min-height:5.5rem;"></p>
                 <p>
                     From sleek logo designs to comprehensive branding packages, every project I take on is treated with
                     the same level of dedication — bringing your vision to life with precision and creativity.
@@ -1571,6 +1751,33 @@
                     <span class="about-tag">Social Media</span>
                     <span class="about-tag">Business Cards</span>
                     <span class="about-tag">Motion Design</span>
+                </div>
+
+                <div class="skill-bars" id="skillBars">
+                    <div class="skill-row">
+                        <div class="skill-meta"><span>Social Media Design</span><span class="skill-pct">95%</span></div>
+                        <div class="skill-track">
+                            <div class="skill-fill" data-width="95%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-meta"><span>Logo & Branding</span><span class="skill-pct">90%</span></div>
+                        <div class="skill-track">
+                            <div class="skill-fill" data-width="90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-meta"><span>Print Media</span><span class="skill-pct">85%</span></div>
+                        <div class="skill-track">
+                            <div class="skill-fill" data-width="85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-meta"><span>Motion Design</span><span class="skill-pct">75%</span></div>
+                        <div class="skill-track">
+                            <div class="skill-fill" data-width="75%"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1839,9 +2046,10 @@
                         <div class="contact-link-icon"><i class="fas fa-phone"></i></div>
                         <div class="contact-link-text"><span>Phone</span><strong>+92 321 8890378</strong></div>
                     </a>
-                    <a href="mailto:zohaib.zsm05@gmail.com" class="contact-link">
+                    <a href="mailto:zohaib.mughalzsm5@gmail.com" class="contact-link contact-email">
                         <div class="contact-link-icon"><i class="fas fa-envelope"></i></div>
-                        <div class="contact-link-text"><span>Email</span><strong>zohaib.zsm05@gmail.com</strong></div>
+                        <div class="contact-link-text"><span>Email</span><strong>zohaib.mughalzsm5@gmail.com</strong>
+                        </div>
                     </a>
                     <div class="contact-link" style="cursor:default;">
                         <div class="contact-link-icon"><i class="fas fa-clock"></i></div>
@@ -1876,7 +2084,7 @@
         </div>
         <div class="footer-bottom">
             <p class="footer-copy">© 2026 <span>Creative</span> — All rights reserved. Designed by Zohaib.</p>
-            <div class="footer-social">
+            <div class="footer-social" id="footerSocials">
                 <a href="https://www.instagram.com/zohaib.mughal007" class="social-btn"><i
                         class="fab fa-instagram"></i></a>
                 <a href="https://www.behance.net/zohaibmughal16" class="social-btn"><i class="fab fa-behance"></i></a>
@@ -1895,7 +2103,116 @@
 
     <!-- ==================== JAVASCRIPT ==================== -->
     <script>
-        // ---- Cursor ----
+        // ==================== GSAP SETUP ====================
+        gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+        // ==================== 1. LOADER ANIMATION ====================
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline();
+            tl.to('#loaderLetter', { scale: 1.5, opacity: 0, duration: 0.9, ease: 'power2.out' })
+                .to('#pageLoader', { yPercent: -100, duration: 0.85, ease: 'expo.inOut' })
+                .from('.hero-badge', { y: 40, opacity: 0, duration: 0.8 }, '-=0.1')
+                .from('.hero-title', { y: 50, opacity: 0, duration: 0.9 }, '-=0.55')
+                .from('.hero-subtitle', { y: 30, opacity: 0, duration: 0.8 }, '-=0.5')
+                .from('.hero-actions', { y: 24, opacity: 0, duration: 0.7 }, '-=0.45');
+        });
+
+        // ==================== 2. HERO CAROUSEL ====================
+        const heroCarousel = document.getElementById('heroCarousel');
+        if (heroCarousel) {
+            const loopDistance = heroCarousel.scrollWidth / 2;
+            gsap.to(heroCarousel, {
+                x: -loopDistance,
+                duration: 16,
+                repeat: -1,
+                ease: 'none'
+            });
+        }
+
+        // ==================== 3. ABOUT TYPING EFFECT ====================
+        gsap.to('#typingText', {
+            duration: 4.5,
+            text: "I'm a passionate graphic designer dedicated to creating visual identities that speak louder than words. With a keen eye for aesthetics and a deep understanding of brand strategy, I help businesses stand out in a crowded marketplace.",
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '#about',
+                start: 'top 68%',
+                once: true
+            }
+        });
+
+        // ==================== 4. SKILL BAR FILLS ====================
+        gsap.utils.toArray('.skill-fill').forEach(bar => {
+            gsap.to(bar, {
+                width: bar.dataset.width,
+                duration: 1.6,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: '#skillBars',
+                    start: 'top 72%',
+                    once: true
+                }
+            });
+        });
+
+        // ==================== 5. PORTFOLIO FILTER (GSAP) ====================
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const items = document.querySelectorAll('.portfolio-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const f = btn.dataset.filter;
+
+                gsap.to(items, {
+                    scale: 0.9,
+                    opacity: 0,
+                    duration: 0.25,
+                    stagger: 0.03,
+                    onComplete: () => {
+                        items.forEach(item => {
+                            const match = f === 'all' || item.dataset.category === f;
+                            item.style.display = match ? '' : 'none';
+                            if (match) {
+                                gsap.fromTo(item,
+                                    { scale: 0.88, opacity: 0 },
+                                    { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.4)' }
+                                );
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+        // ==================== 6. SERVICE ICON SPIN (GSAP) ====================
+        document.querySelectorAll('.service-card').forEach(card => {
+            const icon = card.querySelector('.service-icon-wrap i');
+            card.addEventListener('mouseenter', () => {
+                gsap.to(icon, { rotation: 360, duration: 0.75, ease: 'back.out(1.7)' });
+            });
+            card.addEventListener('mouseleave', () => {
+                gsap.to(icon, { rotation: 0, duration: 0.5, ease: 'power2.inOut' });
+            });
+        });
+
+        // ==================== 7. SOCIAL LINKS STAGGER SLIDE-IN ====================
+        gsap.from('#footerSocials .social-btn', {
+            x: 60,
+            opacity: 0,
+            stagger: 0.15,
+            duration: 0.7,
+            ease: 'power3.out',
+            onComplete: () => gsap.set('#footerSocials .social-btn', { clearProps: 'opacity,transform' }),
+            scrollTrigger: {
+                trigger: 'footer',
+                start: 'top 85%',
+                once: true
+            }
+        });
+
+        // ==================== CURSOR ====================
         const cursor = document.getElementById('cursor');
         const ring = document.getElementById('cursorRing');
         let rx = 0, ry = 0, cx = 0, cy = 0;
@@ -1915,41 +2232,25 @@
             el.addEventListener('mouseleave', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; ring.style.width = '36px'; ring.style.height = '36px'; });
         });
 
-        // ---- Scroll reveal ----
+        // ==================== SCROLL REVEAL ====================
         const reveals = document.querySelectorAll('.reveal');
         const io = new IntersectionObserver((entries) => {
             entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
         }, { threshold: 0.12 });
         reveals.forEach(r => io.observe(r));
 
-        // ---- Nav scroll ----
+        // ==================== NAV SCROLL ====================
         window.addEventListener('scroll', () => {
             document.getElementById('navbar').style.background =
                 window.scrollY > 50 ? 'rgba(7,8,10,0.95)' : 'rgba(7,8,10,0.8)';
         });
 
-        // ---- Mobile menu ----
+        // ==================== MOBILE MENU ====================
         document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('open'));
         document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
         document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open')));
 
-        // ---- Portfolio filter ----
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const items = document.querySelectorAll('.portfolio-item');
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const f = btn.dataset.filter;
-                items.forEach(item => {
-                    const match = f === 'all' || item.dataset.category === f;
-                    item.style.display = match ? '' : 'none';
-                    if (match) { item.style.animation = 'fadeUp 0.5s ease both'; }
-                });
-            });
-        });
-
-        // ---- Lightbox ----
+        // ==================== LIGHTBOX ====================
         items.forEach(item => {
             item.addEventListener('click', () => {
                 const img = item.querySelector('img');
@@ -1964,12 +2265,6 @@
             if (e.target === document.getElementById('lightbox')) document.getElementById('lightbox').classList.remove('open');
         });
 
-        // ---- Smooth reveal for hero stats ----
-        window.addEventListener('load', () => {
-            document.querySelectorAll('.hero-stats .reveal').forEach((el, i) => {
-                setTimeout(() => el.classList.add('visible'), 600 + i * 150);
-            });
-        });
     </script>
 </body>
 
